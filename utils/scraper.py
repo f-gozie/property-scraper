@@ -3,6 +3,7 @@ from selenium.common.exceptions import NoSuchElementException, WebDriverExceptio
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 from typing import List
 
 from decouple import config
@@ -17,7 +18,8 @@ def retrieve_property_urls() -> List[str]:
     if not config('PRODUCTION', cast=bool):
         driver = webdriver.Firefox(options=opt)
     else:
-        driver = webdriver.Firefox(executable_path=config('GECKODRIVER_PATH'), options=opt)
+        binary = FirefoxBinary(config('FIREFOX_BIN'))
+        driver = webdriver.Firefox(firefox_binary=binary, executable_path=config('GECKODRIVER_PATH'), options=opt)
     urls = []
     page_number = 25
     url = f'https://www.crexi.com/properties?page={page_number}'
