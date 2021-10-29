@@ -10,10 +10,9 @@ pipelines:
       - step:
           name: 'Build and Test'
           script:
-            - ls
             - pip install -r requirements.txt
-            - git archive --format=tar.gz main -o property-listings.tar.gz
-            - artifacts property-listings/property-listings.tar.gz
+            - git archive --format=tar.gz master -o property-listings.tar.gz
+            - artifacts property-listings.tar.gz
     - step:
         name: 'Deployment to Production'
         deployment: production
@@ -24,4 +23,4 @@ pipelines:
             variables:
               HEROKU_API_KEY: $HEROKU_API_KEY
               HEROKU_APP_NAME: $HEROKU_APP_NAME
-              ZIP_FILE: property-listings/property-listings.tar.gz
+              ZIP_FILE: property-listings.tar.gz
