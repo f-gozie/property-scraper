@@ -1,11 +1,11 @@
-from django.conf import settings
-
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException, WebDriverException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from typing import List
+
+from decouple import config
 
 
 def retrieve_property_urls() -> List[str]:
@@ -14,7 +14,7 @@ def retrieve_property_urls() -> List[str]:
     """
     opt = webdriver.FirefoxOptions()
     opt.add_argument('-headless')
-    if settings.DEBUG:
+    if not config('PRODUCTION', cast=bool):
         driver = webdriver.Firefox(options=opt)
     else:
         driver = webdriver.Firefox(executable_path=config('GECKODRIVER_PATH'), options=opt)
