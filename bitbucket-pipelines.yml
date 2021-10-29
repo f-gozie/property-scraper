@@ -12,7 +12,8 @@ pipelines:
           script:
             - pip install -r requirements.txt
             - git archive --format=tar.gz master -o property-listings.tar.gz
-            - artifacts property-listings.tar.gz
+          artifacts:
+            - property-listings.tar.gz
     - step:
         name: 'Deployment to Production'
         deployment: production
