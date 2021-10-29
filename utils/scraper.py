@@ -1,3 +1,5 @@
+from django.conf import settings
+
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException, WebDriverException
 from selenium.webdriver.common.by import By
@@ -12,7 +14,10 @@ def retrieve_property_urls() -> List[str]:
     """
     opt = webdriver.FirefoxOptions()
     opt.add_argument('-headless')
-    driver = webdriver.Firefox(options=opt)
+    if settings.DEBUG:
+        driver = webdriver.Firefox(options=opt)
+    else:
+        driver = webdriver.Firefox(executable_path=config('GECKODRIVER_PATH'), options=opt)
     urls = []
     page_number = 25
     url = f'https://www.crexi.com/properties?page={page_number}'
