@@ -20,7 +20,7 @@ pipelines:
         caches:
           - pip
         script:
-          - pipe: f-gozie/property-listings:0.0.1
+          - pipe: atlassian/heroku-deploy:0.1.1
             variables:
               HEROKU_API_KEY: $HEROKU_API_KEY
               HEROKU_APP_NAME: $HEROKU_APP_NAME
