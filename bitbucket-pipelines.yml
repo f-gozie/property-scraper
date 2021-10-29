@@ -10,7 +10,7 @@ pipelines:
       - step:
           name: 'Build and Test'
           script:
-            - cd property-listings
+            - ls
             - pip install -r requirements.txt
             - git archive --format=tar.gz main -o property-listings.tar.gz
             - artifacts property-listings/property-listings.tar.gz
