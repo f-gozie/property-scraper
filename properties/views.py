@@ -1,5 +1,6 @@
 from django.shortcuts import render
 
+from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
@@ -13,6 +14,7 @@ from rest_framework.status import (
 )
 
 from .models import Property, Broker
+from .serializers import PropertySerializer, BrokerSerializer
 
 from utils.scraper import retrieve_property_details, retrieve_property_urls
 
@@ -32,3 +34,15 @@ class UpdateProperties(APIView):
 				print('Success')
 
 		return Response("Successfully updated properties", status=HTTP_201_CREATED)
+
+
+class GetProperties(generics.ListAPIView):
+
+	queryset = Property.objects.all()
+	serializer_class = PropertySerializer
+
+
+class GetBrokers(generics.ListAPIView):
+
+	queryset = Broker.objects.all()
+	serializer_class = BrokerSerializer

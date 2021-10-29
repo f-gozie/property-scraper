@@ -15,8 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from properties.views import GetProperties, GetBrokers
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('property/', include('properties.urls'))
+    path('property/', include('properties.urls')),
+    path('', GetProperties.as_view(), name='properties'),
+    path('brokers/', GetBrokers.as_view(), name='brokers')
 ]
