@@ -6,14 +6,18 @@ certifi==2021.10.8
 cffi==1.15.0
 charset-normalizer==2.0.7
 cryptography==35.0.0
+dj-database-url==0.5.0
 Django==3.2.8
+django-heroku==0.3.1
 django-rest-framework==0.1.0
 djangorestframework==3.12.4
 h11==0.12.0
 idna==3.3
 outcome==1.1.0
+psycopg2==2.9.1
 pycparser==2.20
 pyOpenSSL==21.0.0
+python-decouple==3.5
 pytz==2021.3
 requests==2.26.0
 selenium==4.0.0
@@ -25,4 +29,5 @@ sqlparse==0.4.2
 trio==0.19.0
 trio-websocket==0.9.2
 urllib3==1.26.7
+whitenoise==5.3.0
 wsproto==1.0.0
