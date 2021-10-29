@@ -4,7 +4,7 @@ from .models import Property, Broker
 class PropertyAdmin(admin.ModelAdmin):
 
 	list_display = ['name', 'description', 'price', 'address', 'broker']
-	list_per_page = 30
+	list_per_page = 20
 
 class BrokerAdmin(admin.ModelAdmin):
 
@@ -12,7 +12,7 @@ class BrokerAdmin(admin.ModelAdmin):
 		return obj.properties.count()
 
 	list_display = ['name', 'license', 'no_of_properties']
-	list_per_page = 30
+	list_per_page = 20
 
 
 admin.site.register(Property, PropertyAdmin)
