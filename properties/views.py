@@ -25,13 +25,11 @@ class UpdateProperties(APIView):
 	def post(self, request):
 		urls = retrieve_property_urls()
 		properties = retrieve_property_details(urls)
-		print(properties)
 
 		for prop in properties:
 			broker, _ = Broker.objects.get_or_create(name=prop['broker_name'], license=prop['broker_license'])
 			if not Property.objects.filter(name=prop['property_name']).exists():
 				Property.objects.create(name=prop['property_name'], description=prop['property_description'], address=prop['property_address'], price=prop['property_price'], broker=broker)
-				print('Success')
 
 		return Response("Successfully updated properties", status=HTTP_201_CREATED)
 
