@@ -1,0 +1,27 @@
+# This is an example Starter pipeline configuration
+# Use a skeleton to build, test and deploy using manual and parallel steps
+# -----
+# You can specify a custom docker image from Docker Hub as your build environment.
+image: atlassian/default-image:2
+
+pipelines:
+  default:
+    - parallel:
+      - step:
+          name: 'Build and Test'
+          script:
+            - cd property-listings
+            - pip install -r requirements.txt
+            - git archive --format=tar.gz main -o property-listings.tar.gz
+            - artifacts property-listings/property-listings.tar.gz
+    - step:
+        name: 'Deployment to Production'
+        deployment: production
+        caches:
+          - pip
+        script:
+          - pipe: f-gozie/property-listings:0.0.1
+            variables:
+              HEROKU_API_KEY: $HEROKU_API_KEY
+              HEROKU_APP_NAME: $HEROKU_APP_NAME
+              ZIP_FILE: property-listings/property-listings.tar.gz
