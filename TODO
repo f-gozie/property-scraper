@@ -1,0 +1,6 @@
+TODO List
+----------
+
+[ ] Cache requests during scraping
+[ ] Add cronjobs to schedule scrape requests daily
+[ ] Schedule resumptions based on cached data in case of breaks in internet and stuff

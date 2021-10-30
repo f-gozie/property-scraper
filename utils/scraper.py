@@ -21,7 +21,7 @@ def retrieve_property_urls() -> List[str]:
         binary = FirefoxBinary(config('FIREFOX_BIN'))
         driver = webdriver.Firefox(firefox_binary=binary, executable_path=config('GECKODRIVER_PATH'), options=opt)
     urls = []
-    page_number = 25
+    page_number = 1
     url = f'https://www.crexi.com/properties?page={page_number}'
 
     try:
@@ -65,7 +65,11 @@ def retrieve_property_details(property_urls):
         brokers = driver.find_elements(By.CLASS_NAME, 'brokers-list')
         for broker in brokers:
             broker_name = broker.text.splitlines()[0]
-            broker_license = next(license for license in broker.text.splitlines() if "License" in license)
+            # Return broker's license if available, else return none
+            try:
+                broker_license = next(license for license in broker.text.splitlines() if "License" in license)
+            except StopIteration:
+                broker_license = '-'
 
         # add all these data into a dictionary
         prop['property_name'] = property_name.text
@@ -87,4 +91,4 @@ def retrieve_property_details(property_urls):
 if __name__ == "__main__":
     urls = retrieve_property_urls()
     details = retrieve_property_details(urls)
-    print(details)
+    # print(urls)
