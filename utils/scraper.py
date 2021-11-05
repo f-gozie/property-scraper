@@ -53,9 +53,21 @@ def retrieve_property_details(property_urls):
     Retrieve details for all properties from the properties urls list
     """
     # for each property in the page, open the property url, and retrieve the required data
-    opt = webdriver.FirefoxOptions()
-    opt.add_argument('-headless')
-    driver = webdriver.Firefox(options=opt)
+    # opt = webdriver.FirefoxOptions()
+    # opt.add_argument('-headless')
+    opt = Options()
+    opt.add_argument('--headless')
+    opt.add_argument('--no-sandbox')
+    opt.add_argument('--disable-dev-shm-usage')
+    if not config('PRODUCTION', cast=bool):
+        driver = webdriver.Chrome(options=opt)
+        # driver = webdriver.Firefox(options=opt)
+    else:
+        opt.binary_location = config('GOOGLE_CHROME_BIN')
+        driver = webdriver.Chrome(executable_path=config('CHROMEDRIVER_PATH'), options=opt)
+        # binary = FirefoxBinary(config('FIREFOX_BIN'))
+        # driver = webdriver.Firefox(firefox_binary=binary, executable_path=config('GECKODRIVER_PATH'), options=opt)
+    # driver = webdriver.Firefox(options=opt)
     data = []
     for url in property_urls:
         prop = {}
