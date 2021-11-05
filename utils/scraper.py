@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import NoSuchElementException, WebDriverException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -13,15 +14,22 @@ def retrieve_property_urls() -> List[str]:
     """
     Retrieve the urls for all properties on the crexi website
     """
-    opt = webdriver.FirefoxOptions()
-    opt.add_argument('-headless')
+    opt = Options()
+    opt.add_argument('--headless')
+    opt.add_argument('--no-sandbox')
+    opt.add_argument('--disable-dev-shm-usage')
+    # opt = webdriver.FirefoxOptions()
+    # opt.add_argument('-headless')
     if not config('PRODUCTION', cast=bool):
-        driver = webdriver.Firefox(options=opt)
+        driver = webdriver.Chrome(options=opt)
+        # driver = webdriver.Firefox(options=opt)
     else:
-        binary = FirefoxBinary(config('FIREFOX_BIN'))
-        driver = webdriver.Firefox(firefox_binary=binary, executable_path=config('GECKODRIVER_PATH'), options=opt)
+        opt.binary_location = config('GOOGLE_CHROME_BIN')
+        driver = webdriver.Chrome(executable_path=config('CHROMEDRIVER_PATH'), options=opt)
+        # binary = FirefoxBinary(config('FIREFOX_BIN'))
+        # driver = webdriver.Firefox(firefox_binary=binary, executable_path=config('GECKODRIVER_PATH'), options=opt)
     urls = []
-    page_number = 1
+    page_number = 25
     url = f'https://www.crexi.com/properties?page={page_number}'
 
     try:
@@ -91,4 +99,5 @@ def retrieve_property_details(property_urls):
 if __name__ == "__main__":
     urls = retrieve_property_urls()
     details = retrieve_property_details(urls)
+    # print(details)
     # print(urls)
